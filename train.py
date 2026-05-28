@@ -35,7 +35,7 @@ def load_data():
         df = df[df["interval"].astype(str).str.lower() == "1d"].copy()
 
     if "ticker" not in df.columns:
-        raise ValueError("Dataset missing ticker column")
+        raise ValueError(" missing ticker column")
 
     df["Date"] = pd.to_datetime(df["datetime"], errors="coerce")
     df = df.dropna(subset=["Date"]).copy()
@@ -66,7 +66,7 @@ def build_dataset():
         frames.append(group)
 
     if not frames:
-        raise ValueError("No usable tickers after preprocessing")
+        raise ValueError("No tickers after preprocessing")
 
     return pd.concat(frames, ignore_index=True).fillna(0)
 
@@ -105,21 +105,21 @@ def train():
     xgb_preds = xgb.predict(X_test)
     xgb_probs = xgb.predict_proba(X_test)[:, 1]
 
-    print("\n=== Logistic Regression Baseline ===")
-    print("Accuracy:", accuracy_score(y_test, baseline_preds))
-    print("Precision:", precision_score(y_test, baseline_preds))
-    print("Recall:", recall_score(y_test, baseline_preds))
+    print("\nlogistic regression base")
+    print("accuracy:", accuracy_score(y_test, baseline_preds))
+    print("precision:", precision_score(y_test, baseline_preds))
+    print("recall:", recall_score(y_test, baseline_preds))
     print("F1:", f1_score(y_test, baseline_preds))
-    print("Confusion Matrix:\n", confusion_matrix(y_test, baseline_preds))
+    print("confusion matrix:\n", confusion_matrix(y_test, baseline_preds))
     print(classification_report(y_test, baseline_preds))
 
-    print("\n=== XGBoost Main Model ===")
-    print("Accuracy:", accuracy_score(y_test, xgb_preds))
-    print("Precision:", precision_score(y_test, xgb_preds))
-    print("Recall:", recall_score(y_test, xgb_preds))
+    print("\nxgboost model")
+    print("accuracy:", accuracy_score(y_test, xgb_preds))
+    print("precision:", precision_score(y_test, xgb_preds))
+    print("recall:", recall_score(y_test, xgb_preds))
     print("F1:", f1_score(y_test, xgb_preds))
     print("ROC AUC:", roc_auc_score(y_test, xgb_probs))
-    print("Confusion Matrix:\n", confusion_matrix(y_test, xgb_preds))
+    print("confusion catrix:\n", confusion_matrix(y_test, xgb_preds))
     print(classification_report(y_test, xgb_preds))
 
     joblib.dump(xgb, MODEL_DIR / "xgb_model.pkl")
