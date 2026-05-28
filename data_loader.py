@@ -8,25 +8,22 @@ def download_stock_data(ticker: str, start="2020-01-01", end=None):
 
     df = pd.read_parquet(HF_DATASET_PATH)
 
-    # normalize column names from the dataset
     df.columns = [c.lower() for c in df.columns]
 
-    # expected columns in the HF dataset:
-    # datetime, open, high, low, close, volume, ticker, interval, source_category
     if "ticker" not in df.columns:
-        raise ValueError("Dataset does not contain ticker column")
+        raise ValueError("no ticker column")
 
     df = df[df["ticker"].astype(str).str.upper() == ticker].copy()
 
     if df.empty:
-        raise ValueError(f"No data found for {ticker} in the Hugging Face dataset")
+        raise ValueError(f"no data found for {ticker} in dataset")
 
     if "datetime" in df.columns:
         df["Date"] = pd.to_datetime(df["datetime"], errors="coerce")
     elif "date" in df.columns:
         df["Date"] = pd.to_datetime(df["date"], errors="coerce")
     else:
-        raise ValueError("Dataset does not contain a date/datetime column")
+        raise ValueError("no date/datetime column")
 
     df = df.dropna(subset=["Date"])
     df = df[df["Date"] >= pd.to_datetime(start)].copy()
