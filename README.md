@@ -21,9 +21,7 @@ Additional features were added, including moving averages, volatility, returns, 
 ## Project Type
 This is a classification project.
 
-The model predicts:
-- 1 = stock goes up
-- 0 = stock goes down
+The model predicts 1 for up, 0 for down
 
 
 ## Models Used
