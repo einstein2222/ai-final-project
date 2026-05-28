@@ -19,7 +19,7 @@ def fetch_one(ticker: str, start="2020-01-01", retries=3):
     path = DATA_DIR / f"{ticker}.csv"
 
     if path.exists():
-        print(f"{ticker}: already cached")
+        print(f"{ticker}:exists")
         return True
 
     for attempt in range(1, retries + 1):
@@ -41,7 +41,7 @@ def fetch_one(ticker: str, start="2020-01-01", retries=3):
             print(f"{ticker}: saved")
             return True
         except Exception as e:
-            print(f"{ticker}: attempt {attempt} failed -> {e}")
+            print(f"{ticker}: failed {attempt} -> {e}")
             time.sleep(1.5)
 
     print(f"{ticker}: skipped")
@@ -54,4 +54,4 @@ if __name__ == "__main__":
         if fetch_one(t):
             ok += 1
 
-    print(f"\nSaved {ok}/{len(TICKERS)} tickers.")
+    print("saved {ok}/{len(TICKERS)} tickers.")
