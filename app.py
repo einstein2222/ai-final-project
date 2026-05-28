@@ -12,14 +12,14 @@ if st.button("Predict"):
     if not ticker:
         st.error("Please enter a ticker")
     else:
-        with st.spinner("Running model..."):
+        with st.spinner("running model..."):
             try:
                 result = predict_ticker(ticker)
 
                 if result["prediction"] == 1:
-                    st.success(f"{ticker} predicted UP 📈")
+                    st.success(f"{ticker} predicted UP ")
                 else:
-                    st.error(f"{ticker} predicted DOWN 📉")
+                    st.error(f"{ticker} predicted DOWN ")
 
                 st.metric("Up Probability", f"{result['proba_up']*100:.2f}%")
                 st.metric("Down Probability", f"{result['proba_down']*100:.2f}%")
