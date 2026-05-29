@@ -26,7 +26,7 @@ if st.button("Predict"):
                 st.metric("Sentiment Score", f"{result['sentiment_score']:.3f}")
                 st.metric("Combined Score", f"{result['combined_score']*100:.2f}%")
 
-                st.subheader("News")
+                st.subheader("news")
 
                 if result["news_items"]:
                     for n in result["news_items"]:
@@ -39,7 +39,7 @@ if st.button("Predict"):
                         else:
                             st.write(f"- {title}")
                 else:
-                    st.write("No news found.")
+                    st.write("no news found.")
 
             except Exception as e:
-                st.error(f"Prediction failed: {e}")
+                st.error(f"prediction failed: {e}")
